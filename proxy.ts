@@ -3,7 +3,12 @@ import { NextResponse } from "next/server";
 
 // createRouteMatcher is like a secondary match done by clerk, not dependent on next.js
 
-const isPublicRoute = createRouteMatcher(["/signin", "/signup", "/", "/home"]);
+const isPublicRoute = createRouteMatcher([
+  "/sign-in",
+  "/sign-up",
+  "/",
+  "/home",
+]);
 const isPublicApiRoute = createRouteMatcher(["/api/videos"]);
 
 export default clerkMiddleware(async (auth, req) => {
@@ -22,12 +27,12 @@ export default clerkMiddleware(async (auth, req) => {
     // not logged in and trying to access something else that only a logged in user can (aka a protected route)
     if (!isPublicApiRoute(req) && !isPublicRoute(req)) {
       // force user to login
-      return NextResponse.redirect(new URL("/signin", req.url));
+      return NextResponse.redirect(new URL("/sign-in", req.url));
     }
 
     if (isApiRequest && !isPublicApiRoute(req)) {
       // starting with /api but NOT part of the public api, aka a protected api but user is not logged in
-      return NextResponse.redirect(new URL("/signin", req.url));
+      return NextResponse.redirect(new URL("/sign-in", req.url));
     }
   }
   return NextResponse.next(); // move the request to the next stage, like the next middleware etc. MUST HAVE.
