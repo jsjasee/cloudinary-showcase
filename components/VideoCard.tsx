@@ -13,11 +13,14 @@ dayjs.extend(relativeTime);
 // Step 1: Define an interface
 interface VideoCardProps {
   video: Video;
-  onDownload: (url: string, title: string) => void;
 }
 
+const onDownload = (videoUrl: string, title: string) => {
+  window.open(videoUrl, "_blank"); // "_blank" opens it in a fresh page. we are already passing the cloudinary url so we can download it from there.
+};
+
 // FC stands for functional component?
-const VideoCard: React.FC<VideoCardProps> = ({ video, onDownload }) => {
+const VideoCard: React.FC<VideoCardProps> = ({ video }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [previewError, setPreviewError] = useState(false); // cloudinary recommends that we manage the preview error.
 
@@ -49,7 +52,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, onDownload }) => {
       src: publicId,
       width: 400,
       height: 225,
-      rawTransformations: ["e_preview: duration_15:max_seg_9:min_seg_dur_1"], // this is from the docs: https://cloudinary.com/documentation/transformation_reference
+      rawTransformations: ["e_preview:duration_15:max_seg_9:min_seg_dur_1"], // this is from the docs: https://cloudinary.com/documentation/transformation_reference
     });
   }, []);
 
