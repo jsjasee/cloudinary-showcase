@@ -78,7 +78,6 @@ export default function SocialShare() {
         link.click(); // programtically click the link
         document.body.removeChild(link); // removing the link from the webpage (cleaning up)
         window.URL.revokeObjectURL(url);
-        document.body.removeChild(link);
       });
   };
 

@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // this is to redirect people to the other pages, NOT the next/router one! (why?)
@@ -38,6 +39,7 @@ function VideoUpload() {
       const response = await axios.post("/api/video-upload", formData);
 
       // axios will throw an error and this will be caught below if the response status code is non-200
+      toast.success("Video uploaded successfully!");
     } catch (error) {
       toast.error("Error uploading video.");
       console.log(error);
